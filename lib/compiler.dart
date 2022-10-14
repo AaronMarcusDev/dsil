@@ -29,32 +29,40 @@ class Compiler {
       } else if (type == TokenType.OPERATOR) {
         if (value == Tokens.PLUS) {
           code.add("// plus");
+          code.add("    {");
           code.add("    int a = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    int b = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    stack.push_back(to_string(a + b));");
+          code.add("    }");
         } else if (value == Tokens.MINUS) {
           code.add("// minus");
+          code.add("    {");
           code.add("    int a = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    int b = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    stack.push_back(to_string(b - a));");
+          code.add("    }");
         } else if (value == Tokens.STAR) {
           code.add("// star / times");
+          code.add("    {");
           code.add("    int a = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    int b = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    stack.push_back(to_string(a * b));");
+          code.add("    }");
         } else if (value == Tokens.SLASH) {
+          code.add("    {");
           code.add("// slash / divide");
           code.add("    int a = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    int b = stoi(stack.back());");
           code.add("    stack.pop_back();");
           code.add("    stack.push_back(to_string(b / a));");
+          code.add("    }");
         }
       } else if (type == TokenType.LANGUAGE) {
       } else if (type == TokenType.RAW_STRING) {
