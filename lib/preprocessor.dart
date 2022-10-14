@@ -6,34 +6,33 @@ ErrorReporter report = ErrorReporter();
 
 class Preprocessor {
   process(List<Token> tokens) {
-    List<Token> stack = [];
+    List<Token> macroresult = [];
+    List<Token> result = [];
     int errors = 0;
-
-    _pop() => stack.removeLast();
-    _push(Token token) => stack.add(token);
+    Map<String, List<Token>> macros = {};
 
     for (int i = 0; i < tokens.length; i++) {
       TokenType type = tokens[i].type;
       dynamic value = tokens[i].value;
-      String file = tokens[i].file;
-      int line = tokens[i].line;
 
       if (type == TokenType.KEYWORD) {
-        if (value == 'pop') {
-          _pop();
-        } else if (value == 'dup') {
-          _push(stack[stack.length - 1]);
-        } else if (value == "con") {
-          _push(Token(file, TokenType.STRING, line, tokens[i].pos,
-              "${_pop().value}${_pop().value}"));
-        } else if (value == "clear") {
-          stack.clear();
-        } else if (type == TokenType.STRING) {
-          _push(tokens[i]);
+        if (value == "mac") {
+          List<Token> macro = [];
+          String name = tokens[i + 1].value;
+          i += 2;
+          while (true) {
+            if (tokens[i].value == "end") {
+              break;
+            }
+            macro.add(tokens[i]);
+            i++;
+          }
+          macros[name] = macro;
+        } else {
+          macroresult.add(tokens[i]);
         }
-      }
-      for (var item in stack) {
-        print(item.value);
+      } else {
+        macroresult.add(tokens[i]);
       }
       if (errors > 0) {
         print(
@@ -41,5 +40,20 @@ class Preprocessor {
         exit(1);
       }
     }
+
+    for (Token token in macroresult) {
+      if (token.type == TokenType.KEYWORD) {
+        if (macros.containsKey(token.value)) {
+          for (Token token in macros[token.value]!) {
+            result.add(token);
+          }
+        } else {
+          result.add(token);
+        }
+      } else {
+        result.add(token);
+      }
+    }
+    return result;
   }
 }

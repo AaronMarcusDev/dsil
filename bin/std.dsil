@@ -1,0 +1,45 @@
+// Standard library
+
+mac pop
+    `// pop`
+    `    stack.pop_back();`
+end
+
+mac clear
+    `// clear`
+    `    stack.clear();`
+end
+
+mac con
+    `// con`
+    `    string a = stack.back();`
+    `    stack.pop_back();`
+    `    string b = stack.back();`
+    `    stack.pop_back();`
+    `    stack.push_back(a + b);`
+end
+
+mac dup
+    `// dup`
+    `    stack.push_back(stack.back());`
+end
+
+mac swap
+    `// swap`
+    `    string a = stack.back();`
+    `    stack.pop_back();`
+    `    string b = stack.back();`
+    `    stack.pop_back();`
+    `    stack.push_back(a);`
+    `    stack.push_back(b);`
+end
+
+mac puts
+    `// puts`
+    `    cout << stack.back() << endl;`
+    `    stack.pop_back();`
+end
+
+// program
+
+34 35 + puts

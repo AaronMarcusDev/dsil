@@ -4,6 +4,7 @@ enum TokenType {
   LANGUAGE,
   KEYWORD,
   STRING,
+  RAW_STRING,
   INTEGER,
   FLOAT,
   BOOLEAN,

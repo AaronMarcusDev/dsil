@@ -233,6 +233,32 @@ class Lexer {
           }
           break;
 
+        case '`':
+          {
+            List<String> stringArray = [];
+            int start = curr;
+            curr++;
+            while (true) {
+              if (_isAtEnd()) {
+                error.error(file, line, "Unterminated raw_string.");
+                errors++;
+                break;
+              } else if (chars[curr] == '\n') {
+                error.error(file, line, "Unterminated raw_string.");
+                errors++;
+                break;
+              } else if (chars[curr] == '`') {
+                // tokens.add({TokenType.STRING: stringArray.join("")});
+                tokens.add(Token(file, TokenType.RAW_STRING, line, start,
+                    stringArray.join("")));
+                break;
+              }
+              stringArray.add(chars[curr]);
+              curr++;
+            }
+          }
+          break;
+
         default:
           {
             if (_isLetter(chars[curr])) {
