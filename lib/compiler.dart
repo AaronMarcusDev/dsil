@@ -26,6 +26,36 @@ class Compiler {
       int pos = token.pos;
 
       if (type == TokenType.KEYWORD) {
+      } else if (type == TokenType.OPERATOR) {
+        if (value == Tokens.PLUS) {
+          code.add("// plus");
+          code.add("    int a = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    int b = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    stack.push_back(to_string(a + b));");
+        } else if (value == Tokens.MINUS) {
+          code.add("// minus");
+          code.add("    int a = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    int b = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    stack.push_back(to_string(b - a));");
+        } else if (value == Tokens.STAR) {
+          code.add("// star / times");
+          code.add("    int a = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    int b = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    stack.push_back(to_string(a * b));");
+        } else if (value == Tokens.SLASH) {
+          code.add("// slash / divide");
+          code.add("    int a = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    int b = stoi(stack.back());");
+          code.add("    stack.pop_back();");
+          code.add("    stack.push_back(to_string(b / a));");
+        }
       } else if (type == TokenType.LANGUAGE) {
       } else if (type == TokenType.RAW_STRING) {
         code.add(value);
