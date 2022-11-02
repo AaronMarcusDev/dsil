@@ -42,7 +42,7 @@ enum Tokens {
   STRING,
   NUMBER,
 
-  //EOL
+  //EOF
   EOF
 }
 
